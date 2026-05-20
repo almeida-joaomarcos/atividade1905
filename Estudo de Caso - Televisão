@@ -1,0 +1,97 @@
+public class Televisao {
+    private double tamanhoTela;
+    private int volume;
+    private String marca;
+    private int voltagem;
+    private int canal;
+    private boolean ligada;
+
+    public Televisao(double tamanhoTela, String marca, int voltagem) {
+        this.tamanhoTela = tamanhoTela;
+        this.marca = marca;
+        this.voltagem = voltagem;
+        this.volume = 5;
+        this.canal = 1;
+        this.ligada = false;
+    }
+
+    public void ligar() {
+        if (!ligada) {
+            ligada = true;
+            double consumo = voltagem * tamanhoTela;
+            System.out.println("Televisão " + marca + " ligada.");
+            System.out.println("Consumo: " + consumo + " watts");
+        } else {
+            System.out.println("A televisão já está ligada.");
+        }
+    }
+
+    public void desligar() {
+        if (ligada) {
+            ligada = false;
+            System.out.println("Televisão " + marca + " desligada.");
+        } else {
+            System.out.println("A televisão já está desligada.");
+        }
+    }
+
+    public void aumentarVolume() {
+        if (ligada) {
+            if (volume < 10) {
+                volume++;
+                System.out.println("Volume: " + volume);
+            } else {
+                System.out.println("Volume já está no máximo (10).");
+            }
+        } else {
+            System.out.println("A televisão está desligada.");
+        }
+    }
+
+    public void diminuirVolume() {
+        if (ligada) {
+            if (volume > 1) {
+                volume--;
+                System.out.println("Volume: " + volume);
+            } else {
+                System.out.println("Volume já está no mínimo (1).");
+            }
+        } else {
+            System.out.println("A televisão está desligada.");
+        }
+    }
+
+    public void subirCanal() {
+        if (ligada) {
+            canal++;
+            System.out.println("Canal: " + canal);
+        } else {
+            System.out.println("A televisão está desligada.");
+        }
+    }
+
+    public void descerCanal() {
+        if (ligada) {
+            if (canal > 1) {
+                canal--;
+                System.out.println("Canal: " + canal);
+            } else {
+                System.out.println("Já está no canal mínimo (1).");
+            }
+        } else {
+            System.out.println("A televisão está desligada.");
+        }
+    }
+
+    public static void main(String[] args) {
+        Televisao tv = new Televisao(55, "Samsung", 220);
+        tv.ligar();
+        tv.aumentarVolume();
+        tv.aumentarVolume();
+        tv.subirCanal();
+        tv.subirCanal();
+        tv.descerCanal();
+        tv.diminuirVolume();
+        tv.desligar();
+    }
+}
