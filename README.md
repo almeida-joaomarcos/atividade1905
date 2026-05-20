@@ -1,0 +1,93 @@
+public class Carro {
+    private String modelo;
+    private double velocidade;
+    private double aceleracao;
+    private int marcha;
+    private boolean ligado;
+
+    public Carro(String modelo, double aceleracao) {
+        this.modelo = modelo;
+        this.aceleracao = aceleracao;
+        this.velocidade = 0;
+        this.marcha = 1;
+        this.ligado = false;
+    }
+
+    public void ligar() {
+        if (!ligado) {
+            ligado = true;
+            System.out.println(modelo + " ligado.");
+        } else {
+            System.out.println("O carro já está ligado.");
+        }
+    }
+
+    public void desligar() {
+        if (ligado) {
+            ligado = false;
+            velocidade = 0;
+            marcha = 1;
+            System.out.println(modelo + " desligado.");
+        } else {
+            System.out.println("O carro já está desligado.");
+        }
+    }
+
+    public void acelerar() {
+        if (ligado) {
+            velocidade += aceleracao;
+            System.out.println("Velocidade atual: " + velocidade + " km/h");
+        } else {
+            System.out.println("O carro está desligado.");
+        }
+    }
+
+    public void desacelerar() {
+        if (ligado) {
+            velocidade = Math.max(0, velocidade - aceleracao);
+            System.out.println("Velocidade atual: " + velocidade + " km/h");
+        } else {
+            System.out.println("O carro está desligado.");
+        }
+    }
+
+    public void virarDireita() {
+        System.out.println(modelo + " virou à direita.");
+    }
+
+    public void virarEsquerda() {
+        System.out.println(modelo + " virou à esquerda.");
+    }
+
+    public void marchaParaCima() {
+        if (ligado) {
+            marcha++;
+            System.out.println("Marcha atual: " + marcha);
+        } else {
+            System.out.println("O carro está desligado.");
+        }
+    }
+
+    public void marchaParaBaixo() {
+        if (ligado && marcha > 1) {
+            marcha--;
+            System.out.println("Marcha atual: " + marcha);
+        } else if (marcha == 1) {
+            System.out.println("Já está na primeira marcha.");
+        } else {
+            System.out.println("O carro está desligado.");
+        }
+    }
+
+    public static void main(String[] args) {
+        Carro carro = new Carro("Civic", 10);
+        carro.ligar();
+        carro.acelerar();
+        carro.acelerar();
+        carro.marchaParaCima();
+        carro.virarDireita();
+        carro.desacelerar();
+        carro.marchaParaBaixo();
+        carro.desligar();
+    }
+}
