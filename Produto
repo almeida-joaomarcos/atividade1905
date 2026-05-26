@@ -1,0 +1,107 @@
+public class Produto {
+
+    private String nome;
+    private double preco;
+    private int quantidade;
+    private static int totalProdutosCriados = 0;
+
+    public Produto(String nome, double preco, int quantidade) {
+        this.nome = nome;
+
+        if (preco < 0) {
+            throw new IllegalArgumentException("Erro: preço não pode ser negativo. Valor informado: " + preco);
+        }
+        this.preco = preco;
+
+        if (quantidade < 0) {
+            throw new IllegalArgumentException("Erro: quantidade não pode ser negativa. Valor informado: " + quantidade);
+        }
+        this.quantidade = quantidade;
+
+        totalProdutosCriados++;
+    }
+
+    public String getNome() { return nome; }
+    public double getPreco() { return preco; }
+    public int getQuantidade() { return quantidade; }
+    public static int getTotalProdutosCriados() { return totalProdutosCriados; }
+
+    public void setNome(String nome) { this.nome = nome; }
+
+    public void setPreco(double preco) {
+        if (preco < 0) {
+            throw new IllegalArgumentException("Erro: preço não pode ser negativo. Valor informado: " + preco);
+        }
+        this.preco = preco;
+    }
+
+    public void setQuantidade(int quantidade) {
+        if (quantidade < 0) {
+            throw new IllegalArgumentException("Erro: quantidade não pode ser negativa. Valor informado: " + quantidade);
+        }
+        this.quantidade = quantidade;
+    }
+
+    public double calcularValorEstoque() {
+        return preco * quantidade;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Produto: %-20s | Preço: R$ %8.2f | Quantidade: %4d | Valor em Estoque: R$ %10.2f",
+                nome, preco, quantidade, calcularValorEstoque()
+        );
+    }
+}
+
+
+public class Programa {
+
+    public static void main(String[] args) {
+
+        Produto p1 = new Produto("Notebook Dell", 3599.90, 10);
+        Produto p2 = new Produto("Mouse Sem Fio", 89.99, 50);
+        Produto p3 = new Produto("Teclado Mecânico", 249.90, 25);
+
+        System.out.println(p1);
+        System.out.println(p2);
+        System.out.println(p3);
+
+        double totalEstoque = p1.calcularValorEstoque()
+                + p2.calcularValorEstoque()
+                + p3.calcularValorEstoque();
+
+        System.out.printf("%nValor total em estoque: R$ %.2f%n", totalEstoque);
+        System.out.println("Total de produtos criados: " + Produto.getTotalProdutosCriados());
+
+        System.out.println("\n--- Testes com Valores Inválidos ---");
+
+        try {
+            Produto invalido1 = new Produto("Produto Inválido", -50.0, 10);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Produto invalido2 = new Produto("Produto Inválido", 100.0, -5);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            p1.setPreco(-999.0);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            p2.setQuantidade(-3);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("Total de produtos criados (após tentativas inválidas): "
+                + Produto.getTotalProdutosCriados());
+    }
+}
